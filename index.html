@@ -52,7 +52,7 @@
         }
         .ticket-header, .ticket-row {
             display: grid;
-            grid-template-columns: 60px 1fr 2fr 120px 160px 120px 120px 100px;
+            grid-template-columns: 80px 60px 1fr 2fr 120px 160px 120px 120px 100px;
             padding: 8px 16px;
             border-bottom: 1px solid #e5e5e5;
             align-items: center;
@@ -67,6 +67,7 @@
         .ticket-row {
             font-size: 14px;
             transition: background 0.2s;
+            cursor: pointer;
         }
         .ticket-row:hover {
             background: #f5f5f5;
@@ -82,7 +83,6 @@
             background: #e1f0ff;
             color: #0067b8;
         }
-        /* Placeholder styles for future statuses */
         .status-approved {
             background: #e6f4ea;
             color: #107c41;
@@ -132,7 +132,7 @@
         .loading {
             color: #6264a7;
         }
-        /* Modal Styles */
+        /* Modal Styles (Create Ticket) */
         .modal {
             display: none;
             position: fixed;
@@ -145,19 +145,26 @@
         }
         .modal-content {
             background: #fff;
-            width: 400px;
+            width: 500px;
             max-width: 90%;
             margin: 100px auto;
             padding: 20px;
             border-radius: 4px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
         }
         .modal-content h2 {
             font-size: 18px;
             margin: 0 0 16px;
             font-weight: 600;
         }
-        .modal-content input, .modal-content textarea {
+        .modal-content label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        .modal-content select, .modal-content input, .modal-content textarea {
             width: 100%;
             padding: 8px;
             margin-bottom: 12px;
@@ -165,6 +172,21 @@
             border-radius: 4px;
             font-size: 14px;
             box-sizing: border-box;
+        }
+        .modal-content .approvers-section {
+            margin-bottom: 12px;
+        }
+        .modal-content .approvers-section .user-circle {
+            margin-top: 8px;
+        }
+        .modal-content .toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .modal-content .toggle input {
+            width: auto;
         }
         .modal-content .button-group {
             display: flex;
@@ -192,21 +214,123 @@
         .modal-content .cancel:hover {
             background: #d5d5d5;
         }
+        /* Details Modal Styles */
+        .details-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        .details-modal-content {
+            background: #fff;
+            width: 500px;
+            max-width: 90%;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        .details-modal-content .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #666;
+        }
+        .details-modal-content .header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .details-modal-content .header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+        .details-modal-content .ticket-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        .details-modal-content .description {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 16px;
+        }
+        .details-modal-content .timeline {
+            border-left: 2px solid #e5e5e5;
+            padding-left: 20px;
+            margin-left: 12px;
+        }
+        .details-modal-content .timeline-item {
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .details-modal-content .timeline-item::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: #d1d1d1;
+            border-radius: 50%;
+            position: absolute;
+            left: -27px;
+            top: 4px;
+        }
+        .details-modal-content .timeline-item .user-circle {
+            margin-bottom: 4px;
+        }
+        .details-modal-content .timeline-item .action {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .details-modal-content .timeline-item .details {
+            font-size: 12px;
+            color: #666;
+        }
+        .details-modal-content .footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 16px;
+        }
+        .details-modal-content .footer button {
+            padding: 6px 12px;
+            background: #e5e5e5;
+            color: #333;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .details-modal-content .footer button:hover {
+            background: #d5d5d5;
+        }
         @media (max-width: 768px) {
             .ticket-header, .ticket-row {
                 grid-template-columns: 60px 1fr 1fr 80px;
             }
-            .ticket-header span:nth-child(3), .ticket-row span:nth-child(3) {
-                display: none;
+            .ticket-header span:nth-child(1), .ticket-row span:nth-child(1) {
+                display: none; /* Hide Priority */
             }
-            .ticket-header span:nth-child(5), .ticket-row span:nth-child(5) {
-                display: none;
+            .ticket-header span:nth-child(4), .ticket-row span:nth-child(4) {
+                display: none; /* Hide Description */
             }
             .ticket-header span:nth-child(6), .ticket-row span:nth-child(6) {
-                display: none;
+                display: none; /* Hide Created At */
             }
             .ticket-header span:nth-child(7), .ticket-row span:nth-child(7) {
-                display: none;
+                display: none; /* Hide Sent by */
+            }
+            .ticket-header span:nth-child(8), .ticket-row span:nth-child(8) {
+                display: none; /* Hide Sent to */
             }
         }
     </style>
@@ -221,6 +345,7 @@
         </div>
         <div class="ticket-list">
             <div class="ticket-header">
+                <span>Priority</span>
                 <span>ID</span>
                 <span>Title</span>
                 <span>Description</span>
@@ -237,9 +362,34 @@
     <!-- Modal for creating a new ticket -->
     <div id="create-ticket-modal" class="modal">
         <div class="modal-content">
-            <h2>Create New Ticket</h2>
-            <input type="text" id="modal-title" placeholder="Ticket Title" required>
-            <textarea id="modal-description" placeholder="Ticket Description" required></textarea>
+            <h2>New request</h2>
+            <label>Request type *</label>
+            <select>
+                <option>Basic</option>
+            </select>
+            <label>Name of request *</label>
+            <input type="text" id="modal-title" placeholder="Use a name that's easy to understand..." required>
+            <label>Description *</label>
+            <textarea id="modal-description" placeholder="Enter description here" required></textarea>
+            <div class="approvers-section">
+                <label>Sent to *</label>
+                <div class="user-circle">
+                    <span class="circle">ST</span>
+                    Support Team
+                </div>
+            </div>
+            <div class="toggle">
+                <input type="checkbox" id="require-response">
+                <label for="require-response">Require a response from all recipients</label>
+            </div>
+            <label>Priority</label>
+            <select id="modal-priority">
+                <option>High</option>
+                <option selected>Medium</option>
+                <option>Low</option>
+            </select>
+            <label>Additional details</label>
+            <textarea id="modal-additional-details" placeholder="Enter additional details here"></textarea>
             <div class="button-group">
                 <button class="cancel" onclick="closeModal()">Cancel</button>
                 <button class="submit" onclick="createTicket()">Create</button>
@@ -247,10 +397,43 @@
         </div>
     </div>
 
+    <!-- Modal for ticket details -->
+    <div id="ticket-details-modal" class="details-modal">
+        <div class="details-modal-content">
+            <button class="close" onclick="closeDetailsModal()">×</button>
+            <div class="header">
+                <h2>Ticket Details</h2>
+                <span id="details-status" class="status"></span>
+            </div>
+            <div class="ticket-title" id="details-title"></div>
+            <div class="description" id="details-description"></div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="user-circle">
+                        <span class="circle">PK</span>
+                        <span class="action">Approved by Pranjal Khadka</span>
+                    </div>
+                    <div class="details" id="details-approved-time"></div>
+                </div>
+                <div class "timeline-item">
+                    <div class="user-circle">
+                        <span class="circle">PK</span>
+                        <span class="action">Requested by Pranjal Khadka</span>
+                    </div>
+                    <div class="details" id="details-requested-time"></div>
+                </div>
+            </div>
+            <div class="footer">
+                <button onclick="closeDetailsModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const API_URL = 'https://ticket-teams.fly.dev';
+        let allTickets = [];
 
-        // Modal functions
+        // Modal functions (Create Ticket)
         function openModal() {
             document.getElementById('create-ticket-modal').style.display = 'block';
         }
@@ -259,6 +442,25 @@
             document.getElementById('create-ticket-modal').style.display = 'none';
             document.getElementById('modal-title').value = '';
             document.getElementById('modal-description').value = '';
+            document.getElementById('require-response').checked = false;
+            document.getElementById('modal-priority').value = 'Medium';
+            document.getElementById('modal-additional-details').value = '';
+        }
+
+        // Details Modal functions
+        function openDetailsModal(ticket) {
+            document.getElementById('details-status').className = `status status-${ticket.status.toLowerCase()}`;
+            document.getElementById('details-status').textContent = ticket.status;
+            document.getElementById('details-title').textContent = ticket.title;
+            document.getElementById('details-description').textContent = ticket.description;
+            const createdTime = new Date(ticket.created_at).toLocaleString();
+            document.getElementById('details-requested-time').textContent = createdTime;
+            document.getElementById('details-approved-time').textContent = createdTime;
+            document.getElementById('ticket-details-modal').style.display = 'block';
+        }
+
+        function closeDetailsModal() {
+            document.getElementById('ticket-details-modal').style.display = 'none';
         }
 
         // Display message (loading, error, or no tickets)
@@ -279,16 +481,19 @@
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 const tickets = await response.json();
+                allTickets = tickets;
                 const ticketList = document.getElementById('ticket-list');
                 if (tickets.length === 0) {
                     displayMessage('No tickets found. Create one using the button above.', '');
                     return;
                 }
                 ticketList.innerHTML = '';
-                tickets.forEach(ticket => {
+                tickets.forEach((ticket, index) => {
                     const row = document.createElement('div');
                     row.className = 'ticket-row';
+                    row.onclick = () => openDetailsModal(ticket);
                     row.innerHTML = `
+                        <span>High</span>
                         <span>${ticket.id}</span>
                         <span>${ticket.title}</span>
                         <span>${ticket.description}</span>
@@ -296,7 +501,7 @@
                         <span>${new Date(ticket.created_at).toLocaleString()}</span>
                         <span class="user-circle"><span class="circle">PK</span> Pranjal Khadka</span>
                         <span class="user-circle"><span class="circle">ST</span> Support Team</span>
-                        <span><button onclick="deleteTicket(${ticket.id})">Delete</button></span>
+                        <span><button onclick="event.stopPropagation(); deleteTicket(${ticket.id})">Delete</button></span>
                     `;
                     ticketList.appendChild(row);
                 });
@@ -309,11 +514,19 @@
         // Create a new ticket
         async function createTicket() {
             const title = document.getElementById('modal-title').value;
-            const description = document.getElementById('modal-description').value;
+            let description = document.getElementById('modal-description').value;
+            const additionalDetails = document.getElementById('modal-additional-details').value;
+
             if (!title || !description) {
-                alert('Please fill in all fields');
+                alert('Please fill in all required fields');
                 return;
             }
+
+            // Append additional details to description if provided
+            if (additionalDetails) {
+                description += '\n\nAdditional details:\n' + additionalDetails;
+            }
+
             try {
                 const response = await fetch(`${API_URL}/tickets`, {
                     method: 'POST',
