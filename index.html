@@ -52,7 +52,7 @@
         }
         .ticket-header, .ticket-row {
             display: grid;
-            grid-template-columns: 60px 1fr 2fr 120px 160px 100px;
+            grid-template-columns: 60px 1fr 2fr 120px 160px 120px 120px 100px;
             padding: 8px 16px;
             border-bottom: 1px solid #e5e5e5;
             align-items: center;
@@ -176,6 +176,12 @@
             .ticket-header span:nth-child(5), .ticket-row span:nth-child(5) {
                 display: none;
             }
+            .ticket-header span:nth-child(6), .ticket-row span:nth-child(6) {
+                display: none;
+            }
+            .ticket-header span:nth-child(7), .ticket-row span:nth-child(7) {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -194,6 +200,8 @@
                 <span>Description</span>
                 <span>Status</span>
                 <span>Created At</span>
+                <span>Sent by</span>
+                <span>Sent to</span>
                 <span>Action</span>
             </div>
             <div id="ticket-list"></div>
@@ -260,6 +268,8 @@
                         <span>${ticket.description}</span>
                         <span><span class="status status-${ticket.status.toLowerCase()}">${ticket.status}</span></span>
                         <span>${new Date(ticket.created_at).toLocaleString()}</span>
+                        <span>Pranjal Khadka</span>
+                        <span>Support Team</span>
                         <span><button onclick="deleteTicket(${ticket.id})">Delete</button></span>
                     `;
                     ticketList.appendChild(row);
