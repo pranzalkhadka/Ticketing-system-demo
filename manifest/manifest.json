@@ -6,9 +6,9 @@
     "packageName": "com.example.ticketingapp",
     "developer": {
       "name": "Pranjal Khadka",
-      "websiteUrl": "https://ea44-103-181-226-122.ngrok-free.app",
-      "privacyUrl": "https://ea44-103-181-226-122.ngrok-free.app/privacy.html",
-      "termsOfUseUrl": "https://ea44-103-181-226-122.ngrok-free.app/terms.html"
+      "websiteUrl": "https://ticketing-system-demo-2.fly.dev",
+      "privacyUrl": "https://ticketing-system-demo-2.fly.dev/privacy.html",
+      "termsOfUseUrl": "https://ticketing-system-demo-2.fly.dev/terms.html"
     },
     "icons": {
       "color": "color.png",
@@ -20,19 +20,20 @@
     },
     "description": {
       "short": "Customer service ticketing system",
-      "full": "This app provides a customer ticketing system integrated as a personal tab in Microsoft Teams, allowing users to create, view, and delete support tickets."
+      "full": "This app provides a customer service ticketing system integrated as a personal tab in Microsoft Teams, allowing users to create, view and delete support tickets."
     },
     "accentColor": "#2B579A",
     "staticTabs": [
       {
         "entityId": "ticketingTab",
         "name": "Tickets",
-        "contentUrl": "https://ea44-103-181-226-122.ngrok-free.app/index.html?v=1.0.2",
-        "websiteUrl": "https://ea44-103-181-226-122.ngrok-free.app",
+        "contentUrl": "https://ticketing-system-demo-2.fly.dev/index.html?v=1.0.2",
+        "websiteUrl": "https://ticketing-system-demo-2.fly.dev",
         "scopes": ["personal"]
       }
     ],
     "validDomains": [
-      "*.ngrok-free.app"
+      "ticketing-system-demo-2.fly.dev",
+      "ticket-teams.fly.dev"
     ]
   }

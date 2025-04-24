@@ -99,7 +99,7 @@
         .circle {
             width: 24px;
             height: 24px;
-            background: #d1d1d1;
+            background: #737373; /* Updated to a darker, more intense grey */
             color: #fff;
             border-radius: 50%;
             display: flex;
@@ -411,14 +411,14 @@
                 <div class="timeline-item">
                     <div class="user-circle">
                         <span class="circle">PK</span>
-                        <span class="action">Approved by Pranjal Khadka</span>
+                        <span class="action">Approved by Bikram Adhikari</span>
                     </div>
                     <div class="details" id="details-approved-time"></div>
                 </div>
                 <div class="timeline-item">
                     <div class="user-circle">
                         <span class="circle">PK</span>
-                        <span class="action">Requested by Pranjal Khadka</span>
+                        <span class="action">Requested by Bikram Adhikari</span>
                     </div>
                     <div class="details" id="details-requested-time"></div>
                 </div>
@@ -499,7 +499,7 @@
                         <span>${ticket.description}</span>
                         <span><span class="status status-${ticket.status.toLowerCase()}">${ticket.status}</span></span>
                         <span>${new Date(ticket.created_at).toLocaleString()}</span>
-                        <span class="user-circle"><span class="circle">PK</span> Pranjal Khadka</span>
+                        <span class="user-circle"><span class="circle">PK</span> Bikram Adhikari</span>
                         <span class="user-circle"><span class="circle">ST</span> Support Team</span>
                         <span><button onclick="event.stopPropagation(); deleteTicket(${ticket.id})">Delete</button></span>
                     `;
