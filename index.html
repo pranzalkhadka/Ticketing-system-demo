@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Ticketing System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1 {
+            font-size: 24px;
+            margin: 0 0 20px;
+            color: #2b579a;
+        }
+        .create-ticket {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+        .create-ticket input, .create-ticket textarea {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .create-ticket button {
+            padding: 8px 16px;
+            background: #2b579a;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .create-ticket button:hover {
+            background: #1c3f7a;
+        }
+        .ticket-list {
+            display: flex;
+            flex-direction: column;
+        }
+        .ticket-header, .ticket-row {
+            display: grid;
+            grid-template-columns: 50px 1fr 2fr 100px 150px 80px;
+            padding: 10px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .ticket-header {
+            font-weight: bold;
+            background: #f8f9fa;
+            border-radius: 6px 6px 0 0;
+        }
+        .ticket-row {
+            background: #fff;
+            transition: background 0.2s;
+        }
+        .ticket-row:hover {
+            background: #f9fafb;
+        }
+        .ticket-row button {
+            padding: 5px;
+            background: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .ticket-row button:hover {
+            background: #b02a37;
+        }
+        @media (max-width: 768px) {
+            .ticket-header, .ticket-row {
+                grid-template-columns: 50px 1fr 1fr 80px;
+            }
+            .ticket-header span:nth-child(3), .ticket-row span:nth-child(3) {
+                display: none;
+            }
+            .ticket-header span:nth-child(5), .ticket-row span:nth-child(5) {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Customer Ticketing System</h1>
+        <div class="create-ticket">
+            <input type="text" id="title" placeholder="Ticket Title" required>
+            <textarea id="description" placeholder="Ticket Description" required></textarea>
+            <button onclick="createTicket()">Create Ticket</button>
+        </div>
+        <div class="ticket-list">
+            <div class="ticket-header">
+                <span>ID</span>
+                <span>Title</span>
+                <span>Description</span>
+                <span>Status</span>
+                <span>Created At</span>
+                <span>Action</span>
+            </div>
+            <div id="ticket-list"></div>
+        </div>
+    </div>
+    <script>
+        const API_URL = 'https://ticket-teams.fly.dev/'; // Replace with your Fly.io or ngrok URL
+
+        // Fetch and display tickets
+        async function fetchTickets() {
+            try {
+                const response = await fetch(`${API_URL}/tickets`);
+                const tickets = await response.json();
+                const ticketList = document.getElementById('ticket-list');
+                ticketList.innerHTML = '';
+                tickets.forEach(ticket => {
+                    const row = document.createElement('div');
+                    row.className = 'ticket-row';
+                    row.innerHTML = `
+                        <span>${ticket.id}</span>
+                        <span>${ticket.title}</span>
+                        <span>${ticket.description}</span>
+                        <span>${ticket.status}</span>
+                        <span>${new Date(ticket.created_at).toLocaleString()}</span>
+                        <span><button onclick="deleteTicket(${ticket.id})">Delete</button></span>
+                    `;
+                    ticketList.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching tickets:', error);
+            }
+        }
+
+        // Create a new ticket
+        async function createTicket() {
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            if (!title || !description) {
+                alert('Please fill in all fields');
+                return;
+            }
+            try {
+                const response = await fetch(`${API_URL}/tickets`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, description })
+                });
+                if (response.ok) {
+                    document.getElementById('title').value = '';
+                    document.getElementById('description').value = '';
+                    fetchTickets();
+                } else {
+                    alert('Error creating ticket');
+                }
+            } catch (error) {
+                console.error('Error creating ticket:', error);
+            }
+        }
+
+        // Delete a ticket
+        async function deleteTicket(ticketId) {
+            try {
+                const response = await fetch(`${API_URL}/tickets/${ticketId}`, {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    fetchTickets();
+                } else {
+                    alert('Error deleting ticket');
+                }
+            } catch (error) {
+                console.error('Error deleting ticket:', error);
+            }
+        }
+
+        // Initial fetch
+        fetchTickets();
+    </script>
+</body>
+</html>

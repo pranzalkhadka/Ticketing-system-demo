@@ -1,0 +1,39 @@
+{
+    "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.16/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.16",
+    "version": "1.0.0",
+    "id": "9e4b2c1d-7f8a-4d3e-b9c5-6a2f8e3d4c7b",
+    "packageName": "com.example.ticketingapp",
+    "developer": {
+      "name": "Pranjal Khadka",
+      "websiteUrl": "https://your-app.ngrok-free.app",
+      "privacyUrl": "https://your-app.ngrok-free.app/privacy.html",
+      "termsOfUseUrl": "https://your-app.ngrok-free.app/terms.html"
+    },
+    "icons": {
+      "color": "color.png",
+      "outline": "outline.png"
+    },
+    "name": {
+      "short": "Ticketing System",
+      "full": "Customer Ticketing System"
+    },
+    "description": {
+      "short": "A customer ticketing system for Teams",
+      "full": "This app provides a customer ticketing system integrated as a personal tab in Microsoft Teams, allowing users to create, view, and delete support tickets."
+    },
+    "accentColor": "#2B579A",
+    "staticTabs": [
+      {
+        "entityId": "ticketingTab",
+        "name": "Ticketing System",
+        "contentUrl": "https://your-app.ngrok-free.app",
+        "websiteUrl": "https://your-app.ngrok-free.app",
+        "scopes": ["personal"]
+      }
+    ],
+    "validDomains": [
+      "*.ngrok-free.app",
+      "*.fly.dev"
+    ]
+  }
