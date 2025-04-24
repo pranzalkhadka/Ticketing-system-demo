@@ -16,10 +16,10 @@
     },
     "name": {
       "short": "Tickets",
-      "full": "Ticketing System"
+      "full": "Tickets"
     },
     "description": {
-      "short": "A customer ticketing system for Teams",
+      "short": "Customer service ticketing system",
       "full": "This app provides a customer ticketing system integrated as a personal tab in Microsoft Teams, allowing users to create, view, and delete support tickets."
     },
     "accentColor": "#2B579A",

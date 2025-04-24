@@ -338,7 +338,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Ticketing System</h1>
+            <h1>Tickets</h1>
             <div class="toolbar">
                 <button onclick="openModal()">New ticket</button>
             </div>
@@ -415,7 +415,7 @@
                     </div>
                     <div class="details" id="details-approved-time"></div>
                 </div>
-                <div class "timeline-item">
+                <div class="timeline-item">
                     <div class="user-circle">
                         <span class="circle">PK</span>
                         <span class="action">Requested by Pranjal Khadka</span>
@@ -478,7 +478,7 @@
                     headers: { 'Content-Type': 'application/json' }
                 });
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    throw new Error(`HTTP error! Status: ${response.status} - ${await response.text()}`);
                 }
                 const tickets = await response.json();
                 allTickets = tickets;
@@ -518,7 +518,7 @@
             const additionalDetails = document.getElementById('modal-additional-details').value;
 
             if (!title || !description) {
-                alert('Please fill in all required fields');
+                alert('Please fill in all required fields (Name of request and Description)');
                 return;
             }
 
@@ -527,21 +527,27 @@
                 description += '\n\nAdditional details:\n' + additionalDetails;
             }
 
+            console.log('Creating ticket with:', { title, description });
+
             try {
                 const response = await fetch(`${API_URL}/tickets`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ title, description })
                 });
-                if (response.ok) {
-                    closeModal();
-                    fetchTickets();
-                } else {
-                    alert('Error creating ticket');
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP error! Status: ${response.status} - ${errorText}`);
                 }
+
+                const newTicket = await response.json();
+                console.log('Ticket created successfully:', newTicket);
+                closeModal();
+                await fetchTickets(); // Refresh the ticket list
             } catch (error) {
                 console.error('Error creating ticket:', error);
-                alert('Error creating ticket');
+                alert(`Error creating ticket: ${error.message}. Please check the console for details and ensure the backend is running at ${API_URL}.`);
             }
         }
 
@@ -551,14 +557,13 @@
                 const response = await fetch(`${API_URL}/tickets/${ticketId}`, {
                     method: 'DELETE'
                 });
-                if (response.ok) {
-                    fetchTickets();
-                } else {
-                    alert('Error deleting ticket');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status} - ${await response.text()}`);
                 }
+                await fetchTickets();
             } catch (error) {
                 console.error('Error deleting ticket:', error);
-                alert('Error deleting ticket');
+                alert(`Error deleting ticket: ${error.message}`);
             }
         }
 
