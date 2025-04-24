@@ -7,75 +7,84 @@
     <style>
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #f3f4f6;
+            background-color: #f3f3f3;
             margin: 0;
-            padding: 20px;
+            padding: 16px;
             color: #333;
         }
         .container {
-            max-width: 1200px;
+            max-width: 100%;
             margin: 0 auto;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 20px;
         }
-        h1 {
-            font-size: 24px;
-            margin: 0 0 20px;
-            color: #2b579a;
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
         }
-        .create-ticket {
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 6px;
+        .header h1 {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0;
+            color: #333;
         }
-        .create-ticket input, .create-ticket textarea {
-            width: calc(100% - 20px);
-            padding: 8px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
+        .toolbar {
+            display: flex;
+            gap: 8px;
         }
-        .create-ticket button {
-            padding: 8px 16px;
-            background: #2b579a;
+        .toolbar button {
+            padding: 6px 12px;
+            background: #6264a7;
             color: #fff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 14px;
+            font-weight: 500;
         }
-        .create-ticket button:hover {
-            background: #1c3f7a;
+        .toolbar button:hover {
+            background: #4f52b2;
         }
         .ticket-list {
-            display: flex;
-            flex-direction: column;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
         .ticket-header, .ticket-row {
             display: grid;
-            grid-template-columns: 50px 1fr 2fr 100px 150px 80px;
-            padding: 10px;
-            border-bottom: 1px solid #e5e7eb;
+            grid-template-columns: 60px 1fr 2fr 120px 160px 100px;
+            padding: 8px 16px;
+            border-bottom: 1px solid #e5e5e5;
+            align-items: center;
         }
         .ticket-header {
-            font-weight: bold;
-            background: #f8f9fa;
-            border-radius: 6px 6px 0 0;
+            font-weight: 600;
+            font-size: 12px;
+            color: #5e5e5e;
+            text-transform: uppercase;
+            background: #fafafa;
         }
         .ticket-row {
-            background: #fff;
+            font-size: 14px;
             transition: background 0.2s;
         }
         .ticket-row:hover {
-            background: #f9fafb;
+            background: #f5f5f5;
+        }
+        .status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .status-none {
+            background: #e1f0ff;
+            color: #0067b8;
         }
         .ticket-row button {
-            padding: 5px;
-            background: #dc3545;
+            padding: 4px 8px;
+            background: #d83b01;
             color: #fff;
             border: none;
             border-radius: 4px;
@@ -83,11 +92,83 @@
             font-size: 12px;
         }
         .ticket-row button:hover {
-            background: #b02a37;
+            background: #b32d00;
+        }
+        .message {
+            padding: 16px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+        .error {
+            color: #d83b01;
+        }
+        .loading {
+            color: #6264a7;
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        .modal-content {
+            background: #fff;
+            width: 400px;
+            max-width: 90%;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        .modal-content h2 {
+            font-size: 18px;
+            margin: 0 0 16px;
+            font-weight: 600;
+        }
+        .modal-content input, .modal-content textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .modal-content .button-group {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+        .modal-content button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .modal-content .submit {
+            background: #6264a7;
+            color: #fff;
+        }
+        .modal-content .submit:hover {
+            background: #4f52b2;
+        }
+        .modal-content .cancel {
+            background: #e5e5e5;
+            color: #333;
+        }
+        .modal-content .cancel:hover {
+            background: #d5d5d5;
         }
         @media (max-width: 768px) {
             .ticket-header, .ticket-row {
-                grid-template-columns: 50px 1fr 1fr 80px;
+                grid-template-columns: 60px 1fr 1fr 80px;
             }
             .ticket-header span:nth-child(3), .ticket-row span:nth-child(3) {
                 display: none;
@@ -100,11 +181,11 @@
 </head>
 <body>
     <div class="container">
-        <h1>Customer Ticketing System</h1>
-        <div class="create-ticket">
-            <input type="text" id="title" placeholder="Ticket Title" required>
-            <textarea id="description" placeholder="Ticket Description" required></textarea>
-            <button onclick="createTicket()">Create Ticket</button>
+        <div class="header">
+            <h1>Ticketing System</h1>
+            <div class="toolbar">
+                <button onclick="openModal()">New ticket</button>
+            </div>
         </div>
         <div class="ticket-list">
             <div class="ticket-header">
@@ -118,15 +199,57 @@
             <div id="ticket-list"></div>
         </div>
     </div>
+
+    <!-- Modal for creating a new ticket -->
+    <div id="create-ticket-modal" class="modal">
+        <div class="modal-content">
+            <h2>Create New Ticket</h2>
+            <input type="text" id="modal-title" placeholder="Ticket Title" required>
+            <textarea id="modal-description" placeholder="Ticket Description" required></textarea>
+            <div class="button-group">
+                <button class="cancel" onclick="closeModal()">Cancel</button>
+                <button class="submit" onclick="createTicket()">Create</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        const API_URL = 'https://ticket-teams.fly.dev'; // Replace with your Fly.io or ngrok URL
+        const API_URL = 'https://ticket-teams.fly.dev';
+
+        // Modal functions
+        function openModal() {
+            document.getElementById('create-ticket-modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('create-ticket-modal').style.display = 'none';
+            document.getElementById('modal-title').value = '';
+            document.getElementById('modal-description').value = '';
+        }
+
+        // Display message (loading, error, or no tickets)
+        function displayMessage(text, className) {
+            const ticketList = document.getElementById('ticket-list');
+            ticketList.innerHTML = `<div class="message ${className}">${text}</div>`;
+        }
 
         // Fetch and display tickets
         async function fetchTickets() {
+            displayMessage('Loading tickets...', 'loading');
             try {
-                const response = await fetch(`${API_URL}/tickets`);
+                const response = await fetch(`${API_URL}/tickets`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
                 const tickets = await response.json();
                 const ticketList = document.getElementById('ticket-list');
+                if (tickets.length === 0) {
+                    displayMessage('No tickets found. Create one using the button above.', '');
+                    return;
+                }
                 ticketList.innerHTML = '';
                 tickets.forEach(ticket => {
                     const row = document.createElement('div');
@@ -135,7 +258,7 @@
                         <span>${ticket.id}</span>
                         <span>${ticket.title}</span>
                         <span>${ticket.description}</span>
-                        <span>${ticket.status}</span>
+                        <span><span class="status status-${ticket.status.toLowerCase()}">${ticket.status}</span></span>
                         <span>${new Date(ticket.created_at).toLocaleString()}</span>
                         <span><button onclick="deleteTicket(${ticket.id})">Delete</button></span>
                     `;
@@ -143,13 +266,14 @@
                 });
             } catch (error) {
                 console.error('Error fetching tickets:', error);
+                displayMessage(`Error fetching tickets: ${error.message}. Check if the backend is running at ${API_URL}.`, 'error');
             }
         }
 
         // Create a new ticket
         async function createTicket() {
-            const title = document.getElementById('title').value;
-            const description = document.getElementById('description').value;
+            const title = document.getElementById('modal-title').value;
+            const description = document.getElementById('modal-description').value;
             if (!title || !description) {
                 alert('Please fill in all fields');
                 return;
@@ -161,14 +285,14 @@
                     body: JSON.stringify({ title, description })
                 });
                 if (response.ok) {
-                    document.getElementById('title').value = '';
-                    document.getElementById('description').value = '';
+                    closeModal();
                     fetchTickets();
                 } else {
                     alert('Error creating ticket');
                 }
             } catch (error) {
                 console.error('Error creating ticket:', error);
+                alert('Error creating ticket');
             }
         }
 
@@ -185,6 +309,7 @@
                 }
             } catch (error) {
                 console.error('Error deleting ticket:', error);
+                alert('Error deleting ticket');
             }
         }
 

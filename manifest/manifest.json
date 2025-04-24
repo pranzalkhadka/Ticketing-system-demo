@@ -15,8 +15,8 @@
       "outline": "outline.png"
     },
     "name": {
-      "short": "Ticketing System",
-      "full": "Customer Ticketing System"
+      "short": "Tickets",
+      "full": "Ticketing System"
     },
     "description": {
       "short": "A customer ticketing system for Teams",
@@ -26,7 +26,7 @@
     "staticTabs": [
       {
         "entityId": "ticketingTab",
-        "name": "Ticketing System",
+        "name": "Tickets",
         "contentUrl": "https://ea44-103-181-226-122.ngrok-free.app/index.html?v=1.0.2",
         "websiteUrl": "https://ea44-103-181-226-122.ngrok-free.app",
         "scopes": ["personal"]
