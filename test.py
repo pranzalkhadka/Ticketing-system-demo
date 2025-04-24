@@ -1,15 +1,17 @@
 import msal
 import requests
-
+import os
 # Azure app credentials (from your app.py)
-CLIENT_ID = "e660f5df-830b-4197-b538-f89129763062"
-CLIENT_SECRET = "lPJ8Q~MJCu_0ghkGZcrJBDLbHRXKh61uVh5cybJ3"
-TENANT_ID = "46d6a910-c309-42a3-8144-6fa061daf05f"
 AUTHORITY = f"https://login.microsoftonline.com/{TENANT_ID}"
 SCOPES = ["https://graph.microsoft.com/.default"]
 
+
+CLIENT_ID = os.getenv("CLIENT_ID")
+CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+TENANT_ID = os.getenv("TENANT_ID")
+TEAMS_APP_ID = os.getenv("TEAMS_APP_ID")
+
 # Teams app details (from your app.py)
-TEAMS_APP_ID = "e660f5df-830b-4197-b538-f89129763062"
 ENTITY_ID = "ticketingTab"
 
 def get_access_token():
