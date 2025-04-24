@@ -6,9 +6,9 @@
     "packageName": "com.example.ticketingapp",
     "developer": {
       "name": "Pranjal Khadka",
-      "websiteUrl": "https://your-app.ngrok-free.app",
-      "privacyUrl": "https://your-app.ngrok-free.app/privacy.html",
-      "termsOfUseUrl": "https://your-app.ngrok-free.app/terms.html"
+      "websiteUrl": "https://ea44-103-181-226-122.ngrok-free.app",
+      "privacyUrl": "https://ea44-103-181-226-122.ngrok-free.app/privacy.html",
+      "termsOfUseUrl": "https://ea44-103-181-226-122.ngrok-free.app/terms.html"
     },
     "icons": {
       "color": "color.png",
@@ -27,13 +27,12 @@
       {
         "entityId": "ticketingTab",
         "name": "Ticketing System",
-        "contentUrl": "https://your-app.ngrok-free.app",
-        "websiteUrl": "https://your-app.ngrok-free.app",
+        "contentUrl": "https://ea44-103-181-226-122.ngrok-free.app/index.html?v=1.0.2",
+        "websiteUrl": "https://ea44-103-181-226-122.ngrok-free.app",
         "scopes": ["personal"]
       }
     ],
     "validDomains": [
-      "*.ngrok-free.app",
-      "*.fly.dev"
+      "*.ngrok-free.app"
     ]
   }
