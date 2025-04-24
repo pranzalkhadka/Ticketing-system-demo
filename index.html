@@ -82,6 +82,32 @@
             background: #e1f0ff;
             color: #0067b8;
         }
+        /* Placeholder styles for future statuses */
+        .status-approved {
+            background: #e6f4ea;
+            color: #107c41;
+        }
+        .status-rejected {
+            background: #fdeded;
+            color: #d13438;
+        }
+        .user-circle {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .circle {
+            width: 24px;
+            height: 24px;
+            background: #d1d1d1;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 500;
+        }
         .ticket-row button {
             padding: 4px 8px;
             background: #d83b01;
@@ -268,8 +294,8 @@
                         <span>${ticket.description}</span>
                         <span><span class="status status-${ticket.status.toLowerCase()}">${ticket.status}</span></span>
                         <span>${new Date(ticket.created_at).toLocaleString()}</span>
-                        <span>Pranjal Khadka</span>
-                        <span>Support Team</span>
+                        <span class="user-circle"><span class="circle">PK</span> Pranjal Khadka</span>
+                        <span class="user-circle"><span class="circle">ST</span> Support Team</span>
                         <span><button onclick="deleteTicket(${ticket.id})">Delete</button></span>
                     `;
                     ticketList.appendChild(row);
