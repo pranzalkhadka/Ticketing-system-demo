@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Customer Ticketing System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://statics.teams.cdn.office.net/sdk/v1.11.0/js/MicrosoftTeams.min.js"></script>
     <style>
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
@@ -99,7 +100,7 @@
         .circle {
             width: 24px;
             height: 24px;
-            background: #737373; /* Updated to a darker, more intense grey */
+            background: #737373;
             color: #fff;
             border-radius: 50%;
             display: flex;
@@ -430,8 +431,30 @@
     </div>
 
     <script>
+        // const API_URL = '/api'; // Using the proxy as configured in nginx.conf
         const API_URL = 'https://ticket-teams.fly.dev';
         let allTickets = [];
+
+        // Initialize Microsoft Teams SDK
+        microsoftTeams.initialize(() => {
+            // Get user context
+            microsoftTeams.getContext(async (context) => {
+                const userId = context.userObjectId || context.userId;
+                if (userId) {
+                    console.log('Teams User ID:', userId);
+                    // Send user ID to backend
+                    try {
+                        await fetch(`${API_URL}/register-user`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ userId })
+                        });
+                    } catch (error) {
+                        console.error('Error sending user ID to backend:', error);
+                    }
+                }
+            });
+        });
 
         // Modal functions (Create Ticket)
         function openModal() {
@@ -522,7 +545,6 @@
                 return;
             }
 
-            // Append additional details to description if provided
             if (additionalDetails) {
                 description += '\n\nAdditional details:\n' + additionalDetails;
             }
@@ -544,7 +566,7 @@
                 const newTicket = await response.json();
                 console.log('Ticket created successfully:', newTicket);
                 closeModal();
-                await fetchTickets(); // Refresh the ticket list
+                await fetchTickets();
             } catch (error) {
                 console.error('Error creating ticket:', error);
                 alert(`Error creating ticket: ${error.message}. Please check the console for details and ensure the backend is running at ${API_URL}.`);

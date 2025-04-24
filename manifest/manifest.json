@@ -1,39 +1,58 @@
 {
-    "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.16/MicrosoftTeams.schema.json",
-    "manifestVersion": "1.16",
-    "version": "1.0.0",
-    "id": "9e4b2c1d-7f8a-4d3e-b9c5-6a2f8e3d4c7b",
-    "packageName": "com.example.ticketingapp",
-    "developer": {
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.16/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.16",
+  "version": "1.0.0",
+  "id": "e660f5df-830b-4197-b538-f89129763062",
+  "packageName": "com.example.ticketingapp",
+  "developer": {
       "name": "Pranjal Khadka",
-      "websiteUrl": "https://ticketing-system-demo-2.fly.dev",
-      "privacyUrl": "https://ticketing-system-demo-2.fly.dev/privacy.html",
-      "termsOfUseUrl": "https://ticketing-system-demo-2.fly.dev/terms.html"
-    },
-    "icons": {
+      "websiteUrl": "https://8300-103-181-226-122.ngrok-free.app",
+      "privacyUrl": "https://8300-103-181-226-122.ngrok-free.app/privacy.html",
+      "termsOfUseUrl": "https://8300-103-181-226-122.ngrok-free.app/terms.html"
+  },
+  "icons": {
       "color": "color.png",
       "outline": "outline.png"
-    },
-    "name": {
+  },
+  "name": {
       "short": "Tickets",
       "full": "Tickets"
-    },
-    "description": {
+  },
+  "description": {
       "short": "Customer service ticketing system",
-      "full": "This app provides a customer service ticketing system integrated as a personal tab in Microsoft Teams, allowing users to create, view and delete support tickets."
-    },
-    "accentColor": "#2B579A",
-    "staticTabs": [
+      "full": "This app provides a customer service ticketing system integrated as a personal tab in Microsoft Teams, allowing users to create, view, and delete support tickets."
+  },
+  "accentColor": "#2B579A",
+  "staticTabs": [
       {
-        "entityId": "ticketingTab",
-        "name": "Tickets",
-        "contentUrl": "https://ticketing-system-demo-2.fly.dev/index.html?v=1.0.2",
-        "websiteUrl": "https://ticketing-system-demo-2.fly.dev",
-        "scopes": ["personal"]
+          "entityId": "ticketingTab",
+          "name": "Tickets",
+          "contentUrl": "https://8300-103-181-226-122.ngrok-free.app/index.html?v=1.0.2",
+          "websiteUrl": "https://8300-103-181-226-122.ngrok-free.app",
+          "scopes": ["personal"]
       }
-    ],
-    "validDomains": [
+  ],
+  "webApplicationInfo": {
+      "id": "e660f5df-830b-4197-b538-f89129763062",
+      "resource": "https://graph.microsoft.com"
+  },
+  "validDomains": [
       "ticketing-system-demo-2.fly.dev",
-      "ticket-teams.fly.dev"
-    ]
+      "ticket-teams.fly.dev",
+      "8300-103-181-226-122.ngrok-free.app"
+  ],
+  "activities": {
+      "activityTypes": [
+          {
+              "type": "testNotification",
+              "description": "A test notification sent to verify the notification functionality.",
+              "templateText": "A test notification for ticket <ticketId>"
+          },
+          {
+              "type": "ticketCreated",
+              "description": "Notification sent when a new ticket is created in the ticketing system.",
+              "templateText": "A new ticket (ID: <ticketId>) has been created"
+          }
+      ]
   }
+}
